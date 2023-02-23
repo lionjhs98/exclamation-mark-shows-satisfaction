@@ -16,16 +16,16 @@ One recipe cannot satisfy everyone.
 
 ---
 
-# Hypothesis Testing
+## Hypothesis Testing
 
-## Does the usage of exclamation mark ! in the review and description give the recipes higer rating?
+### Does the usage of exclamation mark ! in the review and description give the recipes higer rating?
 
-### Hypothesis Testing Method : Permuations test
+#### Hypothesis Testing Method : Permuations test
 
-##### We will set up Significance Level at 1% (0.01)
+###### We will set up Significance Level at 1% (0.01)
 
-### Null Hypothesis :  In the data, ratings of recipes with exclamation mark in the review & description and recipes without exclamation mark in the review & description have the same distribution. Exclamation mark is not related to the ratings.
+#### Null Hypothesis :  In the data, ratings of recipes with exclamation mark in the review & description and recipes without exclamation mark in the review & description have the same distribution. Exclamation mark is not related to the ratings.
 
-### Alternative Hypothesis : In the data, ratings of recipes with exclamation mark in the review & description has higher rating than recipes without exclamation mark in the review & description. Rating depends on the existence of exclamation mark.
+#### Alternative Hypothesis : In the data, ratings of recipes with exclamation mark in the review & description has higher rating than recipes without exclamation mark in the review & description. Rating depends on the existence of exclamation mark.
 
 ---
