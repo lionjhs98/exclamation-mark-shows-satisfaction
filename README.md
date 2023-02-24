@@ -38,7 +38,7 @@ Below are the steps that they have taken to get their data set ready for analyza
 #### Change empty list in tags column to NaN
 
 ### Univariate Analysis
-<iframe src="assets/fig1.html" width=800 height=600 frameBorder=0></iframe>
+<iframe src="asset/fig1.html" width=600 height=400 frameBorder=0></iframe>
 
 Because there are outlier in the Total_#!, We decide only include less than or equal 20 "!" from review and description.
 
@@ -61,9 +61,9 @@ Because there are outlier in the Total_#!, We decide only include less than or e
 
 ###### We will set up Significance Level at 1% (0.01)
 
-#### Null Hypothesis :  In the data, ratings of recipes with exclamation mark in the review & description and recipes without exclamation mark in the review & description have the same distribution. Exclamation mark is not related to the ratings.
+##### Null Hypothesis :  In the data, ratings of recipes with exclamation mark in the review & description and recipes without exclamation mark in the review & description have the same distribution. Exclamation mark is not related to the ratings.
 
-#### Alternative Hypothesis : In the data, ratings of recipes with exclamation mark in the review & description has higher rating than recipes without exclamation mark in the review & description. Rating depends on the existence of exclamation mark.
+##### Alternative Hypothesis : In the data, ratings of recipes with exclamation mark in the review & description has higher rating than recipes without exclamation mark in the review & description. Rating depends on the existence of exclamation mark.
 
 
 
