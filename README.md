@@ -40,9 +40,17 @@ Below are the steps that they have taken to get their data set ready for analyza
 ### Univariate Analysis
 <iframe src="asset/fig1.html" width=600 height=400 frameBorder=0></iframe>
 
+
+
 Because there are outlier in the Total_#!, We decide only include less than or equal 20 "!" from review and description.
 
 ### Bivariate Analysis
+
+<iframe src="asset/fig3.html" width=600 height=400 frameBorder=0></iframe>
+
+
+<iframe src="asset/fig4.html" width=600 height=400 frameBorder=0></iframe>
+
 
 ### Interesting Aggregates
 
@@ -50,6 +58,34 @@ Because there are outlier in the Total_#!, We decide only include less than or e
 ---
 
 ## Assessment of Missingness
+
+### Missingness Dependency
+#### Define function
+
+#### Question1: Whether or not the missingness of description column is dependent on n_steps column?
+
+Null hypothesis: The missingness of description column is dependent on n_steps column.
+Alternative hypothesis:The missingness of description column is independent on n_steps column
+We will do a permutation test to investgate our hypothesis. 
+
+##### We conclude the permu_steps_diff p-value < 0.05(as threshold), so we fail to reject the null hypothesis, indicating that The missingness of rating is dependent on the minutes column. The missingness of rating is missing at random(MAR)
+
+<iframe src="asset/fig5.html" width=600 height=400 frameBorder=0></iframe>
+
+<iframe src="asset/fig6.html" width=600 height=400 frameBorder=0></iframe>
+
+#### Question2: Whether or not the missingness of description column is dependent on protein column
+
+Null hypothesis: The missingness of description is dependent on the protein column. 
+Alternative hypothesis:The missingness of description is independent on the protein column. 
+
+We will do a permutation test to investgate our hypothesis. 
+
+##### We conclude the permu_protein p-value > 0.05(as threshold), so we reject the null hypothesis, indicating that The missingness of rating is independent on the minutes column. The missingness of rating is missing completely at random(MCAR)
+
+<iframe src="asset/fig7.html" width=600 height=400 frameBorder=0></iframe>
+
+<iframe src="asset/fig8.html" width=600 height=400 frameBorder=0></iframe>
 
 ---
 
@@ -60,6 +96,9 @@ Because there are outlier in the Total_#!, We decide only include less than or e
 #### Hypothesis Testing Method : Permuations test
 
 ###### We will set up Significance Level at 1% (0.01)
+
+
+
 
 ##### Null Hypothesis :  In the data, ratings of recipes with exclamation mark in the review & description and recipes without exclamation mark in the review & description have the same distribution. Exclamation mark is not related to the ratings.
 
