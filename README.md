@@ -98,6 +98,7 @@ Hyunsoo finds that so merged_df only have review for one whole row, which is ver
     merged_df['description'] = merged_df['description'].str.replace("\n","")
 
 Here is how `merged_df` look like:
+
 | name | id | review | description |
 |:-------------------------------------|-------:|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | 1 brownies in the world best ever | 333281 | These were pretty good, but took forever to bake. I would send it ended up being almost an hour! Even then, the brownies stuck to the foil, and were on the overly moist side and not easy to cut. They did taste quite rich, though! Made for My 3 Chefs. | these are the most; chocolatey, moist, rich, dense, fudgy, delicious brownies that you'll ever make.....sereiously! there's no doubt that these will be your fav brownies ever for you can add things to them or make them plain.....either way they're pure heaven! |
@@ -115,6 +116,7 @@ There is some "unfaithful" data in the `rating` column that present as 0, so Zic
     merged_df.loc[merged_df['rating'] == 0, 'rating'] = np.nan
 
 How `merged_df` look like:
+
 | name | id | rating |
 |:-------------------------------------|-------:|---------:|
 | 1 brownies in the world best ever | 333281 | 4 |
