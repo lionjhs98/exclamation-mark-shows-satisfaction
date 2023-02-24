@@ -115,7 +115,7 @@ There is some "unfaithful" data in the `rating` column that present as 0, so Zic
 
     merged_df.loc[merged_df['rating'] == 0, 'rating'] = np.nan
 
-How `merged_df` look like:
+How `merged_df` look like after cleaning:
 
 | name | id | rating |
 |:-------------------------------------|-------:|---------:|
@@ -129,14 +129,99 @@ How `merged_df` look like:
 
 #### Average rating for each recipe
 
+Zichen thinks that average rating is a very useful information to find. So he use the groupby method to find each recipes' average rating and add that data to the `res` dataframe.
+
+    mean_df = pd.DataFrame(merged_df.groupby("id")['rating'].mean())
+    res = pd.merge(merged_df, mean_df,left_on = 'id',right_index = True,how = 'inner',)
+    res = res.rename(columns = {"rating_y" : "Average Rating", "rating_x" : "rating"})
+
+How tail of `res` look like after cleaning:
+
+| name | id | rating | Average Rating |
+|:---------------------------------------------|-------:|---------:|-----------------:|
+| zydeco ya ya deviled eggs | 308080 | 5 | 5 |
+| cookies by design cookies on a stick | 298512 | 1 | 1 |
+| cookies by design sugar shortbread cookies | 298509 | 1 | 3 |
+| cookies by design sugar shortbread cookies | 298509 | 5 | 3 |
+| cookies by design sugar shortbread cookies | 298509 | nan | 3 |
+
+Above is the result of changing 0 rating to null value and adding average rating column steps. If you look at the last row the rating contains null value instead of zero.
 
 #### Adding Total number of ! from reviews and description column to res
 
+Hyunsoo remebers that the question they decide to investgate related to the number of ! appears in the `description` and `review` columns, so he decide to add a new column `Total_#!` to the `res` dataframe
+
+    res['Total_#!'] = res['review'].str.count("!") + res['description'].str.count("!")
+
+How `res` look like
+| name | id | Total\_#! |
+|:-------------------------------------|-------:|-----------:|
+| 1 brownies in the world best ever | 333281 | 4 |
+| 1 in canada chocolate chip cookies | 453467 | 4 |
+| 412 broccoli casserole | 306168 | 2 |
+| 412 broccoli casserole | 306168 | 1 |
+| 412 broccoli casserole | 306168 | 0 |
+
+
 #### Get rid of outliers from n_steps and minutes columns
+
+When Zichen want to check what recipe takes the longest time to make, he surprisingly find out that it takes 1051200 minutes to make. Zichen thinks that is definitely an outlier for the later test, so he decides to remove some outlier like these in the minutes and n_steps. He set the threshold to only include the recipes which takes less than or equal to 30 steps to make and takes minutes which is less than or equal to 800 minutes.
+
+    res = res[res['minutes'] < 800]
+    res = res[res['n_steps'] <= 30]
+
+This is how res look like after cleaning:
+| name | id | minutes | n_steps |
+|:-------------------------------------|-------:|----------:|----------:|
+| 1 brownies in the world best ever | 333281 | 40 | 10 |
+| 1 in canada chocolate chip cookies | 453467 | 45 | 12 |
+| 412 broccoli casserole | 306168 | 40 | 6 |
+| 412 broccoli casserole | 306168 | 40 | 6 |
+| 412 broccoli casserole | 306168 | 40 | 6 |
+
 
 #### Clean the nutrition column into seperate columns, such as "[calories (#), total fat (PDV), sugar (PDV), sodium (PDV), protein (PDV), saturated fat (PDV), and carbohydrates (PDV)]"
 
+Hyunsoo finds that the `nutrition` which represent calories, total fat, sugar, sodium, protein, saturated fat, and carbohydrates, was express as object type in the `res` so he decide to split nutrition into 7 different new columns and include these columns in the `res`.
+
+	cur = res['nutrition'].str[1:-1].str.split(',')
+	res['calories'] = cur.str[0].astype(float)
+	res['fat'] = cur.str[1].astype(float)
+	res['sugar'] = cur.str[2].astype(float)
+	res['sodium'] = cur.str[3].astype(float)
+	res['protein'] = cur.str[4].astype(float)
+	res['s_fat'] = cur.str[5].astype(float)
+	res['carb'] = cur.str[6].astype(float)
+	res['rating'] = merged_df['rating'].astype(float)
+	res = res.drop(columns = 'nutrition')
+
+Here is how `res` look like after cleaning:
+
+| name | id | calories | fat | sugar | sodium | protein | s_fat | carb | rating |
+|:-------------------------------------|-------:|-----------:|------:|--------:|---------:|----------:|--------:|-------:|---------:|
+| 1 brownies in the world best ever | 333281 | 138.4 | 10 | 50 | 3 | 3 | 19 | 6 | 4 |
+| 1 in canada chocolate chip cookies | 453467 | 595.1 | 46 | 211 | 22 | 13 | 51 | 26 | 5 |
+| 412 broccoli casserole | 306168 | 194.8 | 20 | 6 | 32 | 22 | 36 | 3 | 5 |
+| 412 broccoli casserole | 306168 | 194.8 | 20 | 6 | 32 | 22 | 36 | 3 | 5 |
+| 412 broccoli casserole | 306168 | 194.8 | 20 | 6 | 32 | 22 | 36 |
+
 #### Change empty list in tags column to NaN
+
+Hyunsoo is a careful student, he finds out that there are also unfaithful data appears in the tags, which represent as empty list, so he decide to replace them as NAN.
+
+    res['tags'].replace("['']",np.nan,inplace = True)
+
+Here is how dataset looks like after cleaning:
+
+| name | id | tags |
+|:-------------------------------------|-------:|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 1 brownies in the world best ever | 333281 | ['60-minutes-or-less', 'time-to-make', 'course', 'main-ingredient', 'preparation', 'for-large-groups', 'desserts', 'lunch', 'snacks', 'cookies-and-brownies', 'chocolate', 'bar-cookies', 'brownies', 'number-of-servings'] |
+| 1 in canada chocolate chip cookies | 453467 | ['60-minutes-or-less', 'time-to-make', 'cuisine', 'preparation', 'north-american', 'for-large-groups', 'canadian', 'british-columbian', 'number-of-servings'] |
+| 412 broccoli casserole | 306168 | ['60-minutes-or-less', 'time-to-make', 'course', 'main-ingredient', 'preparation', 'side-dishes', 'vegetables', 'easy', 'beginner-cook', 'broccoli'] |
+| 412 broccoli casserole | 306168 | ['60-minutes-or-less', 'time-to-make', 'course', 'main-ingredient', 'preparation', 'side-dishes', 'vegetables', 'easy', 'beginner-cook', 'broccoli'] |
+| 412 broccoli casserole | 306168 | ['60-minutes-or-less', 'time-to-make', 'course', 'main-ingredient', 'preparation', 'side-dishes', 'vegetables', 'easy', 'beginner-cook', 'broccoli'] |
+
+##### Now we are done with cleaning the data!! Let's Analyze the DATA!!
 
 ### Univariate Analysis
 <iframe src="asset/fig1.html" width=600 height=400 frameBorder=0></iframe>
