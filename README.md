@@ -5,7 +5,16 @@
 
 For "Recipes and Rating", we have two data sets, "Interactions" & "Recipes". "Recipes" dataset contains recipe name and information of the recipe such as nutrition, how much time it takes to make, how many steps it requires, etc. "Interactions" dataset contains reviews and ratings of each recipe.
 
+
+
+	import pandas as pd
+	import numpy as np
+	import os
+	import plotly.express as px
+	pd.options.plotting.backend = 'plotly'
+	
 	interactions = pd.read_csv(os.path.join('food_data', 'RAW_interactions.csv'))
+
 	print(interactions.head().to_markdown(index=False))
 
 
@@ -47,7 +56,7 @@ Below are the steps that they have taken to get their data set ready for analyza
 ### Univariate Analysis
 <iframe src="asset/fig1.html" width=600 height=400 frameBorder=0></iframe>
 
-
+<iframe src="asset/fig2_fixed.html" width=600 height=400 frameBorder=0></iframe>
 
 Because there are outlier in the Total_#!, We decide only include less than or equal 20 "!" from review and description.
 
