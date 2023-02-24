@@ -131,8 +131,6 @@ How `merged_df` look like after cleaning:
 | 412 broccoli casserole | 306168 | 5 |
 | 412 broccoli casserole | 306168 | 5 |
 
----
-
 #### Average rating for each recipe
 
 Zichen thinks that average rating is a very useful information to find. So he use the groupby method to find each recipes' average rating and add that data to the `res` dataframe.
@@ -276,40 +274,83 @@ To understand the relavent columns better, Zichen want to know The existance of 
 
 ### NMAR Analysis
 
+The column `tags` could be **Not Missing at Random**.
+In the process of collecting data of the recipes, the recipe providers could not know which categories or tags they should use for the `tags` column. So they just put an empty list which could be considered as "unfaithful" data. So, this missingness in `tags` column depends on itself rather than other columns. 
 
+#If there is a column contains  n order to make `tags` column 
 
 ### Missingness Dependency
 
-#### Define function
+#### Question1: Whether or not themissingness of `description` column is dependent on `n_steps` column?
 
-#### Question1: Whether or not the missingness of description column is dependent on n_steps column?
+Zichen thinks that `description` column's missingness does not depend on `n_steps` column. However Hyunsoo disagrees, so they decide to test Zichen's statement. 
 
-##### Null hypothesis: The missingness of description column is dependent on n_steps column.
+If the distribution of `n_steps` column when `description` column is missing is similar to the distribution of `n_steps` column when `description` column is not missing that means `n_steps` column has no influence in `description` column's missingness.
 
-##### Alternative hypothesis:The missingness of description column is independent on n_steps column
+So they formed the null and alternative hypothesis for permutation testing to test this question.
 
-We will do a permutation test to investgate our hypothesis. 
+- **Null hypothesis: The distribution of n_steps column when description is missing is similar to the distribution of n_steps column when description is not missing.**
 
-##### We conclude the permu_steps_diff p-value < 0.05(as threshold), so we fail to reject the null hypothesis, indicating that The missingness of rating is dependent on the minutes column. The missingness of rating is missing at random(MAR)
+- **Alternative hypothesis: The distribution of n_steps column when description is missing is not similar to the distribution of n_steps column when description is not missing.**
+
+We will use the absolute mean difference as our test statistic because there is no directional difference.
+
+If the p-value of permutation test is smaller than the significance **level 5% (0.05)**, we reject the null hypothesis, vice versa.
+
+##### Observed Statistics : 1.076055901256069
+
+Their observed value for permutation testing is 1.076. They permutated the n_steps column and compare with the returned result with the observed value to calculate the p-value.
+
+##### P - Value : 0.043
+
+###### 0.043 < 0.05
+
+We conclude the permu_steps_diff p-value (0.043) < 0.05, so we reject the null hypothesis, indicating that the missingness of description is dependent on the n_step column. The missingness of description is missing at random(MAR)
+
+##### We reject the null hypothesis.
+
+It indicates that the distribution of n_steps column when description is missing is similar to the distribution of n_steps column when description is not missing.
 
 <iframe src="asset/fig5.html" width=600 height=400 frameBorder=0></iframe>
 
+Fig5 shows the n_step difference distribution from the n_steps permutation test. The x axis is the step difference and teh y axis is the percentage it appears in the permutation test. The redline shows here represent our observed data and the total proportion on its right add up to 0.043.
+
 <iframe src="asset/fig6.html" width=600 height=400 frameBorder=0></iframe>
 
-#### Question2: Whether or not the missingness of description column is dependent on protein column
+#### Question2: Whether or not the missingness of description column is dependent on protein column?
 
-##### Null hypothesis: The missingness of description is dependent on the protein column.
+Zichen thinks that `description` column's missingness does not depend on `protein` column. However Hyunsoo disagrees, so they decide to test Zichen's statement. 
 
-##### Alternative hypothesis:The missingness of description is independent on the protein column.
+If the distribution of protein column when description is missing is similar to the distribution of protein column when description is not missing that means `protein` column has no influence in `description` column's missingness.
+
+So they formed the null and alternative hypothesis for permutation testing to test this question.
+
+- **Null hypothesis: The distribution of protein column when description is missing is similar to the distribution of protein column when description is not missing.**
+
+- **Alternative hypothesis:The distribution of protein column when description is missing is not similar to the distribution of protein column when description is not missing.**
+
+We will use the absolute mean difference as our test statistic because there is no directional difference. 
+
+If the p-value of permutation test is smaller than the significance level **5% (0.05)**, we reject the null hypothesis, vice versa.
+
+##### Observed Statistics : 4.661309105518065
 
 
-We will do a permutation test to investgate our hypothesis. 
+The observed value for permutation testing is 4.66. They permutated the protein column and compare with the returned result with the observed value to calculate the p-value.
 
-##### We conclude the permu_protein p-value > 0.05(as threshold), so we reject the null hypothesis, indicating that The missingness of rating is independent on the minutes column. The missingness of rating is missing completely at random(MCAR)
+##### P - Value : 0.239
+
+###### 0.239 < 0.05
+
+##### We fail to reject the null hypothesis.
+
+It indicates that the distribution of protein column when description is missing is similar to the distribution of protein column when description is not missing. We conclude the permu_protein_diff p-value (0.239) > 0.05, so we fail to reject the null hypothesis, indicating that The missingness of description is not dependent on the protein column.
+
+We conclude the permu_protein p-value > 0.05(as threshold), so we reject the null hypothesis, indicating that The missingness of rating is independent on the minutes column. The missingness of rating is missing completely at random(MCAR)
 
 <iframe src="asset/fig7.html" width=600 height=400 frameBorder=0></iframe>
 
-<iframe src="asset/fig8.html" width=600 height=400 frameBorder=0></iframe>
+Fig7 shows the protein difference distribution from the protein permutation test. The x axis is the protein difference and the y axis is the percentage it appears in the permutation test. The redline shows here represent our observed data(4.66) and the total proportion on its right add up to 0.239.
 
 ---
 
@@ -317,18 +358,27 @@ We will do a permutation test to investgate our hypothesis.
 
 ### Does the usage of exclamation mark ! in the review and description give the recipes higer rating?
 
-#### Hypothesis Testing Method : Permuations test
+After Hyunsoo and Zichen observed and analyed the dataset. They have cleaned and extracted only the data they need to test their idea, "Does the usage of exclamation mark ! in the review and description give the recipes higer rating?"
 
-###### We will set up Significance Level at 1% (0.01)
+They decided if they compare the distribution between `ratings` with exclamation mark in the `review` & `description` columns and `ratings` without exclamation mark in the `review` & `description`columns, they would know if the existence of exclamation mark has influence on the recipe's `ratings`.
 
+##### Hypothesis Testing Method : Permuations test
 
+##### We will set up Significance Level at 5% (0.05)
 
+#### Null Hypothesis :  In the data, ratings of recipes with exclamation mark in the review & description columns and recipes without exclamation mark in the review & description columns have the same distribution.
 
-##### Null Hypothesis :  In the data, ratings of recipes with exclamation mark in the review & description and recipes without exclamation mark in the review & description have the same distribution. Exclamation mark is not related to the ratings.
+#### Alternative Hypothesis : In the data, ratings of recipes with exclamation mark in the review & description has higher rating than recipes without exclamation mark in the review & description. 
 
-##### Alternative Hypothesis : In the data, ratings of recipes with exclamation mark in the review & description has higher rating than recipes without exclamation mark in the review & description. Rating depends on the existence of exclamation mark.
+##### Test Statistics : Difference in group means
 
+we use difference in group means to see if mean ratings with exclamation mark is higher than the ones that do not. It is directional differrence, so we can not use absolute difference in this case. 
 
+##### Getting observed value
+
+Exclamation mark is not related to the ratings.
+
+Rating depends on the existence of exclamation mark.
 
 
 ---
