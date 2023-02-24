@@ -8,20 +8,33 @@ For "Recipes and Rating", we have two data sets, "Interactions" & "Recipes". "Re
 
 |    user_id |   recipe_id | date       |   rating | review                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
 |-----------:|------------:|:-----------|---------:|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-|    1293707 |       40893 | 2011-12-21 |        5 | So simple, so delicious! Great for chilly fall evening. Should have doubled it ;)<br/><br/>Second time around, forgot the remaining cumin. We usually love cumin, but didn't notice the missing 1/2 teaspoon!                                                                                                                                                                                                                                                                                                                                                                                                                 |
+|    1293707 |       40893 | 2011-12-21 |        5 | So simple, so delicious! Great for chilly fall evening. Should have doubled it ;)<br/><br/>Second...                                                                                                                                                                                                                                                                                                                                                                                                                |
 |     126440 |       85009 | 2010-02-27 |        5 | I made the Mexican topping and took it to bunko.  Everyone loved it.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
 |      57222 |       85009 | 2011-10-01 |        5 | Made the cheddar bacon topping, adding a sprinkling of black pepper. Yum!                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
 |     124416 |      120345 | 2011-08-06 |        0 | Just an observation, so I will not rate.  I followed this procedure with strawberries instead of raspberries.  Perhaps this is the reason it did not work well.  Sorry to report that the strawberries I did in August were moldy in October.  They were stored in my downstairs fridge, which is very cold and infrequently opened.  Delicious and fresh-tasting prior to that, though.  So, keep a sharp eye on them.  Personally I would not keep them longer than a month.  This recipe also appears as #120345 posted in July 2009, which is when I tried it.  I also own the Edna Lewis cookbook in which this appears. |
 | 2000192946 |      120345 | 2015-05-10 |        2 | This recipe was OVERLY too sweet.  I would start out with 1/3 or 1/4 cup of sugar and jsut add on from there.  Just 2 cups was way too much and I had to go back to the grocery store to buy more raspberries because it made so much mix.  Overall, I would but the long narrow box or raspberries.  Its a perfect fit for the recipe plus a little extra.  I was not impressed with this recipe.  It was exceptionally over-sweet.  If you make this simple recipe, MAKE SURE TO ADD LESS SUGAR!                                                                                                                            |
 
 
-	recipes = pd.read_csv(os.path.join('food_data', 'RAW_recipes.csv'))
-	print(recipes.head().to_markdown(index=False))
+
 
 When Zichen and Hyunsoo are looking for try to cook some new food, they tend to look up the reviews from food.com, the website where they usually get the data from. But, the problem is that the website has too many recipes and they do not have time to read and try all of them. They usually get a lot of information from the reviews,descriptions and ratings of the food. They only want to try the recipes that got at least 4 stars. One day, Hyunsoo wonders if emotional expressions(existance of exclamation mark) in reviews and descriptions has a connection to the recipe ratings.
 They decided to investgate if there is a connection or not with the question below:
 
 ### Does the usage of exclamation mark ! in the review and description give the recipes higer rating?
+
+
+##### Brief Information of the dataset used.
+
+Number of **Rows** in the Merged dataset of `Recipes` and `Interactions` is
+==234429==
+
+Columns Explanation for Data Analysis
+
+`description` : The column where the provider of the recipes explains about the recipes. We can learn what we are expecting from the recipe and its cooking process. This column is very useful when you never heard of the name of the recipes. 
+
+`ratings` : The column where people who tried the recipe wrote comments about how they felt about the recipe personally. It is a good data to see how people think differently about the same recipe and get more detailed information which `description` column does not contain.
+
+`rating` : The column which contains people's opinion of the recipe in numeric values from 1 to 5. We analyze the people's judgement on the recipes in numeric value which would make the comparison between recipes easier. Sometimes it is hard to judge by just looking at the recipes and description. 
 
 ---
 
@@ -31,7 +44,7 @@ They decided to investgate if there is a connection or not with the question bel
 
 The datasets that Zichen and Hyunsoo are using unfortunately have issues. In order to make a precise analysis, they had to look closely on each column and check if there is any problem before they use.
 
-Below are the steps that they have taken to get their data set ready for analyzation.
+Below are the steps that they have taken to get their data set ready for analyzation. 
 
 #### Merging interactions and recipes
 
@@ -72,7 +85,12 @@ Because there are outlier in the Total_#!, We decide only include less than or e
 
 ## Assessment of Missingness
 
+### NMAR Analysis
+
+
+
 ### Missingness Dependency
+
 #### Define function
 
 #### Question1: Whether or not the missingness of description column is dependent on n_steps column?
@@ -80,6 +98,7 @@ Because there are outlier in the Total_#!, We decide only include less than or e
 ##### Null hypothesis: The missingness of description column is dependent on n_steps column.
 
 ##### Alternative hypothesis:The missingness of description column is independent on n_steps column
+
 We will do a permutation test to investgate our hypothesis. 
 
 ##### We conclude the permu_steps_diff p-value < 0.05(as threshold), so we fail to reject the null hypothesis, indicating that The missingness of rating is dependent on the minutes column. The missingness of rating is missing at random(MAR)
