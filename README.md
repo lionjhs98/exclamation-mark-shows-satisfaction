@@ -1,4 +1,4 @@
-# More !!! Better Recipe !
+# More !!! Better Recipe !!!
 
 ---
 ## Introduction
@@ -358,27 +358,60 @@ Fig7 shows the protein difference distribution from the protein permutation test
 
 ### Does the usage of exclamation mark ! in the review and description give the recipes higer rating?
 
-After Hyunsoo and Zichen observed and analyed the dataset. They have cleaned and extracted only the data they need to test their idea, "Does the usage of exclamation mark ! in the review and description give the recipes higer rating?"
+After Hyunsoo and Zichen observed and analyzed the dataset. They have cleaned and extracted only the data they need to test their idea, "Does the usage of exclamation mark ! in the review and description give the recipes higer rating?"
 
-They decided if they compare the distribution between `ratings` with exclamation mark in the `review` & `description` columns and `ratings` without exclamation mark in the `review` & `description`columns, they would know if the existence of exclamation mark has influence on the recipe's `ratings`.
+They decided to compare the distribution between `ratings` with exclamation mark in the `review` & `description` columns and `ratings` without exclamation mark in the `review` & `description`columns, they would know if the existence of exclamation mark has influence on the recipe's `ratings`.
+
+Since, they want to compare the distribution of two groups from same data set, they decided to use permutations test.
 
 ##### Hypothesis Testing Method : Permuations test
 
-##### We will set up Significance Level at 5% (0.05)
+##### They set up Significance Level at 5% (0.05)
 
-#### Null Hypothesis :  In the data, ratings of recipes with exclamation mark in the review & description columns and recipes without exclamation mark in the review & description columns have the same distribution.
+##### Null Hypothesis :  **In the data, ratings of recipes with exclamation mark in the review & description columns and recipes without exclamation marks in the review & description columns have the same distribution. Ratings of recipes with exclamation marks has higher mean than the recipes do not is due to chance.**
 
-#### Alternative Hypothesis : In the data, ratings of recipes with exclamation mark in the review & description has higher rating than recipes without exclamation mark in the review & description. 
+With above null hypothesis, they can test if the higher mean rating is generated due to chance. Also, whether that `"Total_#!"` has influence on `ratings`.
+
+##### Alternative Hypothesis : **In the data, ratings of recipes with exclamation marks in the review & description has higher rating than recipes without exclamation marks in the review & description.**
 
 ##### Test Statistics : Difference in group means
 
-we use difference in group means to see if mean ratings with exclamation mark is higher than the ones that do not. It is directional differrence, so we can not use absolute difference in this case. 
+- They used difference in group means to see if mean ratings with exclamation mark is higher than the ones that do not. They want to see if ratings with exclamation mark would usually be higher than the ratings which do not. So, comparing the mean ratings would show them how big the difference is among them.
+
+- Since, they want to see which is higher or not, the difference has to be directional. So, they did not use absolute mean difference in this case. 
 
 ##### Getting observed value
 
-Exclamation mark is not related to the ratings.
+| Total_#!   |    mean |   count |
+|:-----------|--------:|--------:|
+| False      | 4.46073 |   52664 |
+| True       | 4.75043 |  162823 |
 
-Rating depends on the existence of exclamation mark.
+##### Test Statistics : Containing Exclamation Mean - Not Containing Exclamation Mean
+
+             	4.750479      -     4.460473        =     0.290006
+
+##### Observed Statistics : 0.290006
+
+They permutated `Total_#!` column from the dataset and compare the returned results with the observed values. They observed how many values out of the results are bigger than the observed value. 
+If there are many mean differences bigger than the observed values, there maybe no relationship in between the existence of exclamation mark to `rating`
+
+##### P-Value : 0.0
+
+				P-Value < Significance Level 1%
+				0.0     <  0.01
+
+#### Conclusion
+
+With the information above, they **rejected the null hypothesis** that ratings of having & not having exclamation mark have similar distributon at a 1% significance level.
+
+Could they answer their question with the test results?
+
+Unfortunately not. 
+
+Even though the test rejected the null hypothesis, they cannot state that the alternative hypothesis, **ratings of recipes with exclamation marks in the review & description has higher rating than recipes without exclamation marks in the review & description**, is absolutely correct.
+
+They gained statistical evidence that supports the alternative hypothesis more than the null hypothesis. The existance of exclamation marks may have positive effects on the ratings, but there could be other aspects that influence the `ratings.`. If there are more data, the influence may change  as well.
 
 
 ---
