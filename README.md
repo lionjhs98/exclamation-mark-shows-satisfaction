@@ -28,7 +28,7 @@ Below is what `Interactions` dataset looks like.
 
 
 
-When Zichen and Hyunsoo are looking for try to cook some new food, they tend to look up the reviews from food.com, the website where they usually get the data from. But, the problem is that the website has too many recipes and they do not have time to read and try all of them. They usually get a lot of information from the reviews,descriptions and ratings of the food. They only want to try the recipes that got at least 4 stars. One day, Hyunsoo wonders if emotional expressions(existance of exclamation mark) in reviews and descriptions has a connection to the recipe ratings.
+When Zichen and Hyunsoo are looking for try to cook some new food, they tend to look up the reviews from food.com, the website where they usually get the data from. But, the problem is that the website has too many recipes and they do not have time to read and try all of them. They usually get a lot of information from the reviews, descriptions and ratings of the food. They only want to try the recipes that got at least 4 stars. One day, Hyunsoo wonders if emotional expressions(existance of exclamation mark) in reviews and descriptions has a connection to the recipe ratings.
 They decided to investgate if there is a connection or not with the question below:
 
 ### Does the usage of exclamation mark ! in the review and description give the recipes higer rating?
@@ -258,7 +258,7 @@ In this box plot, the x axis is the rating, and the y axis is the total number o
 After observing the box plot, they decided there is not outliers in the data and they decided to proceed their anaysis.
 
 
-### Interesting Aggregates
+### Interesting Aggregation
 
 To understand the relavent columns better, Zichen want to know The existance of exclaimation mark in review and descriptions' influence to rating. So Hyunsoo create a grouped table for Zichen to compare directly. Hyunsoo change the total_#! to whether or not the description or review contains the exclamation mark(represent as Boolean). Then he groupby the existance of exclamation mark and calculate the mean and count of these two catagory.
 
@@ -274,10 +274,10 @@ To understand the relavent columns better, Zichen want to know The existance of 
 
 ### NMAR Analysis
 
-The column `tags` could be **Not Missing at Random**.
-In the process of collecting data of the recipes, the recipe providers could not know which categories or tags they should use for the `tags` column. So they just put an empty list which could be considered as "unfaithful" data. So, this missingness in `tags` column depends on itself rather than other columns. 
+The column `review` could be **Not Missing at Random**.
+In the process of collecting data of the `interactions` dataframe, the reviewers could feel lazy and decided not to write reviews where they still gave ratings. So they just put an empty data which could be considered as "unfaithful" data. So, this missingness in `review` column depends on itself by having an external cause.
 
-#If there is a column contains  n order to make `tags` column 
+If there is a column contains the information of whether that the reviewers have wrote the review or not, we could say that `review` column is Missing at Random with higher chance. For example, if we add the imaginery column `Review Yes/No` which contains booleans of whether the reviewers have put the review or not, True if they wrote and False if they did not, then the missingness of `review` column would depend on the imaginery column that we stated. If `Review Yes/No` has False value, the `review` would be missing.
 
 ### Missingness Dependency
 
@@ -289,9 +289,9 @@ If the distribution of `n_steps` column when `description` column is missing is 
 
 So they formed the null and alternative hypothesis for permutation testing to test this question.
 
-- **Null hypothesis: The distribution of n_steps column when description is missing is similar to the distribution of n_steps column when description is not missing.**
+- **Null hypothesis: The distribution of n_steps column when description is missing is same to the distribution of n_steps column when description is not missing.**
 
-- **Alternative hypothesis: The distribution of n_steps column when description is missing is not similar to the distribution of n_steps column when description is not missing.**
+- **Alternative hypothesis: The distribution of n_steps column when description is missing is not same to the distribution of n_steps column when description is not missing.**
 
 We will use the absolute mean difference as our test statistic because there is no directional difference.
 
@@ -325,9 +325,9 @@ If the distribution of protein column when description is missing is similar to 
 
 So they formed the null and alternative hypothesis for permutation testing to test this question.
 
-- **Null hypothesis: The distribution of protein column when description is missing is similar to the distribution of protein column when description is not missing.**
+- **Null hypothesis: The distribution of protein column when description is missing is same to the distribution of protein column when description is not missing.**
 
-- **Alternative hypothesis:The distribution of protein column when description is missing is not similar to the distribution of protein column when description is not missing.**
+- **Alternative hypothesis:The distribution of protein column when description is missing is not same to the distribution of protein column when description is not missing.**
 
 We will use the absolute mean difference as our test statistic because there is no directional difference. 
 
@@ -362,7 +362,9 @@ After Hyunsoo and Zichen observed and analyzed the dataset. They have cleaned an
 
 We decided to compare the distribution between `ratings` with exclamation mark in the `review` & `description` columns and `ratings` without exclamation mark in the `review` & `description`columns, they would know if the existence of exclamation mark has influence on the recipe's `ratings`.
 
-Since, they want to compare the distribution of two groups from same data set, they decided to use permutations test.
+From the original data, we used the data from `ratings`, `review`, and `description`.
+
+Since, we want to compare the distribution of two groups from same data set, they decided to use permutations test.
 
 ##### Hypothesis Testing Method : Permuations test
 
@@ -376,9 +378,9 @@ With above null hypothesis, they can test if the higher mean rating is generated
 
 ##### Test Statistics : Difference in group means
 
-- We used difference in group means to see if mean ratings with exclamation mark is higher than the ones that do not. They want to see if ratings with exclamation mark would usually be higher than the ratings which do not. So, comparing the mean ratings would show them how big the difference is among them.
+- We used difference in group means to see if mean ratings with exclamation mark is higher than the ones that do not. We want to see if ratings with exclamation mark would usually be higher than the ratings which do not. So, comparing the mean ratings would show how big the difference is among the two.
 
-- Since, We want to see which is higher or not, the difference has to be directional. So, they did not use absolute mean difference in this case. 
+- Since, We want to see which is higher or not, the difference has to be directional. So, we did not use absolute mean difference in this case. 
 
 ##### Getting observed value
 
@@ -403,15 +405,15 @@ If there are many mean differences bigger than the observed values, there maybe 
 
 #### Conclusion
 
-With the information above, they **rejected the null hypothesis** that ratings of having & not having exclamation mark have similar distributon at a 1% significance level.
+With the information above, the test **rejected the null hypothesis** that ratings of having & not having exclamation mark have similar distributon at a 1% significance level.
 
-Can we answer their question with the test results?
+Can we answer the question with the test results?
 
-Unfortunately not. 
+**Unfortunately Not.**
 
-Even though the test rejected the null hypothesis, we cannot state that the alternative hypothesis, **ratings of recipes with exclamation marks in the review & description has higher rating than recipes without exclamation marks in the review & description**, is absolutely correct.
+Even though the test rejected the null hypothesis, we cannot state that the **alternative hypothesis**, ratings of recipes with exclamation marks in the review & description has higher rating than recipes without exclamation marks in the review & description, is absolutely correct.
 
-We gained statistical evidence that supports the alternative hypothesis more than the null hypothesis. The existance of exclamation marks may have positive effects on the ratings, but there could be other aspects that influence the `ratings.`. If there are more data, the influence may change  as well.
+We gained statistical evidence that supports the alternative hypothesis more than the null hypothesis. The existance of exclamation marks may have positive effects on the ratings, but there could be other aspects that influence the `ratings.`. If there are more data, the influence may change  as well. The amount of data we have may not be enough to conclude that our question is absolutely right.
 
 
 ---
