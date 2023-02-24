@@ -78,7 +78,13 @@ The datasets that Zichen and Hyunsoo are using unfortunately have issues. In ord
 
 Below are the steps that they have taken to get their data set ready for analyzation. 
 
-#### Merging interactions and recipes
+#### Merging `interactions` and `recipes`
+
+Zichen and Hyunsoo realized that `Interactions` dataset contains information for the individual recipes in `recipes` dataset. They wanted to look at all the information at the same time, so they decided to merge two data. Both data had common data in columnd `id` and `recipe_id` which indicated id for the individual recipes. So they decided to merge the datasets on common `id` column. They did not want to lose all the reviews that `interactions` dataset contains in the process of merging, so they generated more rows based on the number of rows in `interactions` dataset.
+
+    merged_df = pd.merge(recipes,interactions,left_on = 'id',
+                     right_on = 'recipe_id',how = 'left')
+
 
 | name                                 |     id |   minutes |   contributor_id | submitted   | tags                                                                                                                                                                                                                        | nutrition                                    |   n_steps | steps                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | description                                                                                                                                                                                                                                                                                                                                                                       | ingredients                                                                                                                                                                    |   n_ingredients |          user_id |   recipe_id | date       |   rating | review                                                                                                                                                                                                                                                                                                                                           |
 |:-------------------------------------|-------:|----------:|-----------------:|:------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:---------------------------------------------|----------:|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------:|-----------------:|------------:|:-----------|---------:|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -90,7 +96,7 @@ Below are the steps that they have taken to get their data set ready for analyza
 | 412 broccoli casserole               | 306168 |        40 |            50969 | 2008-05-30  | ['60-minutes-or-less', 'time-to-make', 'course', 'main-ingredient', 'preparation', 'side-dishes', 'vegetables', 'easy', 'beginner-cook', 'broccoli']                                                                        | [194.8, 20.0, 6.0, 32.0, 22.0, 36.0, 3.0]    |         6 | ['preheat oven to 350 degrees', 'spray a 2 quart baking dish with cooking spray , set aside', 'in a large bowl mix together broccoli , soup , one cup of cheese , garlic powder , pepper , salt , milk , 1 cup of french onions , and soy sauce', 'pour into baking dish , sprinkle remaining cheese over top', 'bake for 25 minutes or until cheese is lightly browned', 'sprinkle with rest of french fried onions and bake until onions are browned and cheese is bubbly , about 10 more minutes']                                                                                                                                                                                                                                                                                                                              | since there are already 411 recipes for broccoli casserole posted to "zaar" ,i decided to call this one  #412 broccoli casserole.i don't think there are any like this one in the database. i based this one on the famous "green bean casserole" from campbell's soup. but i think mine is better since i don't like cream of mushroom soup.submitted to "zaar" on may 28th,2008 | ['frozen broccoli cuts', 'cream of chicken soup', 'sharp cheddar cheese', 'garlic powder', 'ground black pepper', 'salt', 'milk', 'soy sauce', 'french-fried onions']          |               9 |      1.19628e+06 |      306168 | 2009-04-13 |        5 | I made this for my son's first birthday party this weekend. Our guests INHALED it! Everyone kept saying how delicious it was. I was I could have gotten to try it.                                                                                                                                                                               |
 | 412 broccoli casserole               | 306168 |        40 |            50969 | 2008-05-30  | ['60-minutes-or-less', 'time-to-make', 'course', 'main-ingredient', 'preparation', 'side-dishes', 'vegetables', 'easy', 'beginner-cook', 'broccoli']                                                                        | [194.8, 20.0, 6.0, 32.0, 22.0, 36.0, 3.0]    |         6 | ['preheat oven to 350 degrees', 'spray a 2 quart baking dish with cooking spray , set aside', 'in a large bowl mix together broccoli , soup , one cup of cheese , garlic powder , pepper , salt , milk , 1 cup of french onions , and soy sauce', 'pour into baking dish , sprinkle remaining cheese over top', 'bake for 25 minutes or until cheese is lightly browned', 'sprinkle with rest of french fried onions and bake until onions are browned and cheese is bubbly , about 10 more minutes']                                                                                                                                                                                                                                                                                                                              | since there are already 411 recipes for broccoli casserole posted to "zaar" ,i decided to call this one  #412 broccoli casserole.i don't think there are any like this one in the database. i based this one on the famous "green bean casserole" from campbell's soup. but i think mine is better since i don't like cream of mushroom soup.submitted to "zaar" on may 28th,2008 | ['frozen broccoli cuts', 'cream of chicken soup', 'sharp cheddar cheese', 'garlic powder', 'ground black pepper', 'salt', 'milk', 'soy sauce', 'french-fried onions']          |               9 | 768828           |      306168 | 2013-08-02 |        5 | Loved this.  Be sure to completely thaw the broccoli.  I didn&#039;t and it didn&#039;t get done in time specified.  Just cooked it a little longer though and it was perfect.  Thanks Chef.                                                                                                                                                     |
 
-#### Because there is "\n" in the `review` and `description`, they ruins the dataframe in the markdown, so we need to get rid of them.
+#### Because there is "\n" in the `review` and `description`, the dataframe in the markdown is ruined, so we need to get rid of them.
 
 Hyunsoo finds that so merged_df only have review for one whole row, which is very odd. Hyunsoo look at the dataframe closely and finds there is "\n" and they decide to get rid of them with str.replace method.
 
@@ -153,7 +159,8 @@ Hyunsoo remebers that the question they decide to investgate related to the numb
 
     res['Total_#!'] = res['review'].str.count("!") + res['description'].str.count("!")
 
-How `res` look like
+How `res` look like after cleaning:
+
 | name | id | Total\_#! |
 |:-------------------------------------|-------:|-----------:|
 | 1 brownies in the world best ever | 333281 | 4 |
@@ -171,6 +178,7 @@ When Zichen want to check what recipe takes the longest time to make, he surpris
     res = res[res['n_steps'] <= 30]
 
 This is how res look like after cleaning:
+
 | name | id | minutes | n_steps |
 |:-------------------------------------|-------:|----------:|----------:|
 | 1 brownies in the world best ever | 333281 | 40 | 10 |
@@ -224,7 +232,14 @@ Here is how dataset looks like after cleaning:
 ##### Now we are done with cleaning the data!! Let's Analyze the DATA!!
 
 ### Univariate Analysis
+
+Zichen and Hyunsoo want to take get a general sense about the distribution of each rating. So they decide to form a  histogram to show the Rating distribution.
+
+In the fig1, we can see the x axis is the rating and there are 5 bins from 1 to 5. The y axis represent the number of times each recipe scored. We can tell from see the graph visually that majority of people rate 5 stars to the recipes, and second most is 4 star. There are very few people rate 1 to 3 stars for the recipe.
+
 <iframe src="asset/fig1.html" width=600 height=400 frameBorder=0></iframe>
+
+Zichen and Hyunsoo also want to take get a general sense about the distribution of total number of exclamation marks from review and description. So they decide to form a histogram to show the total# ! distribution. In the fig2, we can see the x axis is the number of exclamation mark ranged from 0 to 50(Because Zichen thinks more than 50 ! are the outlier so he exclude those). The y axis represent the number of times it appears. We can tell from see the graph visually that majority of reviews and description contain total of 0 to 5 exclamation marks which is the reasonable amount.
 
 <iframe src="asset/fig2_fixed.html" width=600 height=400 frameBorder=0></iframe>
 
@@ -232,8 +247,11 @@ Because there are outlier in the Total_#!, We decide only include less than or e
 
 ### Bivariate Analysis
 
+Zichen want to know what kinds of relationship that rating and total number of exclamation marks have, so he decide to draw a line plot to see the relationship between two numerical data. The x axis is the total number of exclamation mark, and the y axis is the rating. We can tell from seeing the graph visually that there is positive correlation between total number of exclamation marks and the rating score.
+
 <iframe src="asset/fig3.html" width=600 height=400 frameBorder=0></iframe>
 
+In this box plot, the x axis is the rating, and the y axis is the total number of exclamation mark.
 
 <iframe src="asset/fig4.html" width=600 height=400 frameBorder=0></iframe>
 
