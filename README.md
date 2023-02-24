@@ -247,16 +247,27 @@ Because there are outlier in the Total_#!, We decide only include less than or e
 
 ### Bivariate Analysis
 
-Zichen want to know what kinds of relationship that rating and total number of exclamation marks have, so he decide to draw a line plot to see the relationship between two numerical data. The x axis is the total number of exclamation mark, and the y axis is the rating. We can tell from seeing the graph visually that there is positive correlation between total number of exclamation marks and the rating score.
+Zichen wants to know what kinds of relationship that rating and total number of exclamation marks have, so he decide to draw a line plot to see the relationship between two numerical data. The x axis is the total number of exclamation mark, and the y axis is the rating. We can tell from seeing the graph visually that there is positive correlation between total number of exclamation marks and the rating score.
 
 <iframe src="asset/fig3.html" width=600 height=400 frameBorder=0></iframe>
+
+Hyunsoo wants to check if there is an outlier which can affect the result of hypothesis testing in the `Total_#!` column. Because Hyunsoo and Zichen may use the data to test their question, so they want to make sure that the data does not have any problem. For example, having millions of exclamation marks could be caused by technology issues and it would have nothing to do with the user's experience.
 
 In this box plot, the x axis is the rating, and the y axis is the total number of exclamation mark.
 
 <iframe src="asset/fig4.html" width=600 height=400 frameBorder=0></iframe>
 
+After observing the box plot, they decided there is not outliers in the data and they decided to proceed their anaysis.
+
 
 ### Interesting Aggregates
+
+To understand the relavent columns better, Zichen want to know The existance of exclaimation mark in review and descriptions' influence to rating. So Hyunsoo create a grouped table for Zichen to compare directly. Hyunsoo change the total_#! to whether or not the description or review contains the exclamation mark(represent as Boolean). Then he groupby the existance of exclamation mark and calculate the mean and count of these two catagory.
+
+| Total_#!   |    mean |   count |
+|:-----------|--------:|--------:|
+| False      | 4.46073 |   52664 |
+| True       | 4.75043 |  162823 |
 
 
 ---
