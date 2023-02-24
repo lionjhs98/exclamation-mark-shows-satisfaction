@@ -285,7 +285,7 @@ If there is a column contains the information of whether that the reviewers have
 
 Zichen thinks that `description` column's missingness does not depend on `n_steps` column. However Hyunsoo disagrees, so they decide to test Zichen's statement. 
 
-If the distribution of `n_steps` column when `description` column is missing is similar to the distribution of `n_steps` column when `description` column is not missing that means `n_steps` column has no influence in `description` column's missingness.
+If the distribution of `n_steps` column when `description` column is missing is same to the distribution of `n_steps` column when `description` column is not missing that means `n_steps` column has no influence in `description` column's missingness.
 
 So they formed the null and alternative hypothesis for permutation testing to test this question.
 
@@ -321,7 +321,7 @@ Fig5 shows the n_step difference distribution from the n_steps permutation test.
 
 Zichen thinks that `description` column's missingness does not depend on `protein` column. However Hyunsoo disagrees, so they decide to test Zichen's statement. 
 
-If the distribution of protein column when description is missing is similar to the distribution of protein column when description is not missing that means `protein` column has no influence in `description` column's missingness.
+If the distribution of protein column when description is missing is same to the distribution of protein column when description is not missing that means `protein` column has no influence in `description` column's missingness.
 
 So they formed the null and alternative hypothesis for permutation testing to test this question.
 
@@ -344,7 +344,7 @@ The observed value for permutation testing is 4.66. They permutated the protein 
 
 ##### We fail to reject the null hypothesis.
 
-It indicates that the distribution of protein column when description is missing is similar to the distribution of protein column when description is not missing. We conclude the permu_protein_diff p-value (0.239) > 0.05, so we fail to reject the null hypothesis, indicating that The missingness of description is not dependent on the protein column.
+It indicates that the distribution of protein column when description is missing is same to the distribution of protein column when description is not missing. We conclude the permu_protein_diff p-value (0.239) > 0.05, so we fail to reject the null hypothesis, indicating that The missingness of description is not dependent on the protein column.
 
 We conclude the permu_protein p-value > 0.05(as threshold), so we reject the null hypothesis, indicating that The missingness of rating is independent on the minutes column. The missingness of rating is missing completely at random(MCAR)
 
@@ -405,7 +405,7 @@ If there are many mean differences bigger than the observed values, there maybe 
 
 #### Conclusion
 
-With the information above, the test **rejected the null hypothesis** that ratings of having & not having exclamation mark have similar distributon at a 1% significance level.
+With the information above, the test **rejected the null hypothesis** that ratings of having & not having exclamation mark have same distributon at a 1% significance level.
 
 Can we answer the question with the test results?
 
