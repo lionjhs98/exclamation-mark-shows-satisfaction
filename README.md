@@ -303,7 +303,7 @@ Their observed value for permutation testing is 1.076. They permutated the n_ste
 
 ##### P - Value : 0.043
 
-###### 0.043 < 0.05
+###### 							0.043 < 0.05
 
 We conclude the permu_steps_diff p-value (0.043) < 0.05, so we reject the null hypothesis, indicating that the missingness of description is dependent on the n_step column. The missingness of description is missing at random(MAR)
 
@@ -340,7 +340,7 @@ The observed value for permutation testing is 4.66. They permutated the protein 
 
 ##### P - Value : 0.239
 
-###### 0.239 < 0.05
+###### 						0.239 < 0.05
 
 ##### We fail to reject the null hypothesis.
 
@@ -389,7 +389,7 @@ With above null hypothesis, they can test if the higher mean rating is generated
 
 ##### Test Statistics : Containing Exclamation Mean - Not Containing Exclamation Mean
 
-             	4.750479      -     4.460473        =     0.290006
+            4.750479      -     4.460473        =     0.290006
 
 ##### Observed Statistics : 0.290006
 
@@ -398,8 +398,8 @@ If there are many mean differences bigger than the observed values, there maybe 
 
 ##### P-Value : 0.0
 
-				P-Value < Significance Level 1%
-				0.0     <  0.01
+			P-Value < Significance Level 1%			
+			0.0     <  0.01
 
 #### Conclusion
 
