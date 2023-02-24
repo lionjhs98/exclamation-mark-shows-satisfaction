@@ -38,7 +38,7 @@ Below are the steps that they have taken to get their data set ready for analyza
 #### Change empty list in tags column to NaN
 
 ### Univariate Analysis
-
+<iframe src="assets/fig1.html" width=800 height=600 frameBorder=0></iframe>
 
 Because there are outlier in the Total_#!, We decide only include less than or equal 20 "!" from review and description.
 
@@ -46,7 +46,7 @@ Because there are outlier in the Total_#!, We decide only include less than or e
 
 ### Interesting Aggregates
 
-	<iframe src="assets/fig1.html" width=800 height=600 frameBorder=0></iframe>
+
 ---
 
 ## Assessment of Missingness
